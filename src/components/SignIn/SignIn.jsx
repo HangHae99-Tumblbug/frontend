@@ -51,6 +51,13 @@ const SignIn = (props) => {
 
   return (
     <>
+    <SignInHeader>
+      <Link to="/">
+      <div>
+        <img src={process.env.PUBLIC_URL + "/tumblbug_logo.svg"}/>
+      </div>
+      </Link>
+    </SignInHeader>
       <MembershipContainer>
         <CenterContainer>
           <SignInContainer>
@@ -72,6 +79,12 @@ const SignIn = (props) => {
                   ref={passwordRef}
                   type="password"
                   placeholder="비밀번호를 입력해주세요"
+                  onKeyPress={(e) => {
+                    if (e.key == 'Enter') {
+                        e.preventDefault();
+                        handleLogin()
+                    }
+                }}
                 />
               </span>
             </FormInputWrapper>
@@ -91,6 +104,39 @@ const SignIn = (props) => {
     </>
   );
 };
+
+const SignInHeader = styled.div`
+@media only screen and (min-width: 1080px){
+    height: 88px;
+}
+      position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 10;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    width: 100%;
+    height: 66px;
+    /* background-color: antiquewhite; */
+    a{
+      display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1080px;
+    padding: 0px 16px;
+    margin: 0px auto;
+    }
+    img{
+      @media only screen and (min-width: 1080px){
+    width: 140px;
+}
+width: 110px;
+    }
+`
 
 const MembershipContainer = styled.div`
   position: relative;

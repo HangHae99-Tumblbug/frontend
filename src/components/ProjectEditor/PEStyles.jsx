@@ -124,7 +124,6 @@ export const PEInfoTitle = styled.dt`
     margin-bottom: 12px;
     font-size: 16px !important;
     line-height: 24px !important;
-      sans-serif !important;
   }
   margin-bottom: 14px;
   font-weight: 700;

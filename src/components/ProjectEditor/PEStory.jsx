@@ -103,7 +103,7 @@ const PEStory = (props) => {
           { indent: '+1' },
           { align: [] }
         ],
-        ['image', 'video']
+        ['image']
       ],
       handlers: {
         image: handleImage

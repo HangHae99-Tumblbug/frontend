@@ -17,7 +17,7 @@ const newPostSlice = createSlice({
           fundingPrice: 1000,
         },
       ],
-      plan: "",
+      plan: "<p><br></p>",
       creatorName: "",
       creatorBiography: "",
     },
@@ -52,6 +52,7 @@ const newPostSlice = createSlice({
       state.post.rewards = action.payload;
     },
     setPlan(state, action) {
+      console.log(action.payload);
       state.post.plan = action.payload;
     },
     setCreatorName(state, action) {
@@ -62,6 +63,14 @@ const newPostSlice = createSlice({
     },
     setTmpImage(state, action){
         state.tmpImages = [...state.tmpImages, action.payload]
+    },
+    removeRewards(state, action){
+        // const index = state.post.rewards.indexOf(action.payload)
+        const newRewards = [...state.post.rewards]
+        console.log(action.payload);
+
+        newRewards.splice(action.payload, 1)
+        state.post.rewards = newRewards
     }
   },
   extraReducers: {},
@@ -80,5 +89,6 @@ export const {
   setPlan,
   setCreatorName,
   setCreatorBiography,
-  setTmpImage
+  setTmpImage,
+  removeRewards
 } = newPostSlice.actions;

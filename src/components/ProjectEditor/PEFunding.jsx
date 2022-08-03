@@ -28,29 +28,31 @@ const PEFunding = (props) => {
   const goalRef = useRef();
   const startDateRef = useRef()
   const endDateRef = useRef()
-//   const [goal, setGoal] = useState("0");
-//   const [startDate, setStartDate] = useState()
-//   const [endDate, setEndDate] = useState()
+  
   const handleOnChange = (e) => {
     let value = e.target.value;
-    // value = Number(value.replaceAll(',', ''));
-    // const formatValue = value.toLocaleString('ko-KR');
-    value = value.replace(/[^0-9\\.]+/g, "");
-    const formatValue = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    // console.log(formatValue);
-    // setGoal(formatValue);
-    dispatch(setGoal(value))
-    goalRef.current.value = formatValue;
+    if(Number(value) > 2100000000) {
+      alert("최대 21억까지 설정 가능합니다.")
+      dispatch(setGoal("2100000000"))
+    }
+    else{
+      // value = Number(value.replaceAll(',', ''));
+      // const formatValue = value.toLocaleString('ko-KR');
+      value = value.replace(/[^0-9\\.]+/g, "");
+      const formatValue = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      // console.log(formatValue);
+      // setGoal(formatValue);
+      dispatch(setGoal(value))
+      goalRef.current.value = formatValue;
+    }
   };
   const handleStartDateChange = (e) => {
-    // setStartDate(e.target.value)
     dispatch(setStartDate(e.target.value))
     dispatch(setEndDate(e.target.value))
     console.log(e.target.value);
   }
   const handleEndDateChange = (e) => {
     dispatch(setEndDate(e.target.value))
-    // setEndDate(e.target.value)
     console.log(e.target.value);
   }
   useEffect(() => {

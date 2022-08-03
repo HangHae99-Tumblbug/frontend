@@ -1,30 +1,54 @@
 import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useLocation } from 'react-router-dom';
 import './ProjectEditor.css';
 import PEDefault from './PEDefault';
 import PEFunding from './PEFunding';
 import PEStory from './PEStory';
 import PEReward from './PEReward';
 import PECreator from './PECreator';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import TumblbugApis from '../../shared/api';
 import { useMutation } from '@tanstack/react-query';
+import { setTmpImage } from '../../redux/newPostSlice';
 
 const ProjectEditor = (props) => {
   const params = useParams();
   const postData = useSelector((state) => state.post.post);
+  const dispatch = useDispatch()
+  const location = useLocation()
+  const [savable, setSavable] = useState(false)
   const newPost = () => {
     TumblbugApis.newPost(postData);
   };
-  const { mutate } = useMutation(newPost);
+  const { mutate } = useMutation(newPost, {
+    onSuccess: () => {
+      dispatch(setTmpImage([]))
+      location("/")
+    }
+  });
   // const images = postData.thumbnails.map(x => x?.filename)
   const tmpImages = useSelector((state) => state.post.tmpImages);
 
   // const
   useEffect(() => {
-    console.log(tmpImages);
+    if(postData.title.length <= 32 && postData.title.length > 0
+      && postData.summary.length <= 50 && postData.summary.length > 0
+      && postData.goal < 2100000000 && postData.goal > 0
+      && postData.rewards.length > 0
+      && postData.thumbnails.length > 0
+      && postData.category !== ""
+      && postData.startDate !== ""
+      && postData.endDate !== ""
+      && postData.plan !== ""
+      && postData.creatorName.length <= 20 && postData.creatorName.length > 0
+      && postData.creatorBiography.length <= 300 && postData.creatorBiography.length > 0
+      ){
+        setSavable(true)
+      }
+      else setSavable(false)
   }, [postData]);
+
   useEffect(() => {
     return () => {
       console.log(tmpImages);
@@ -49,8 +73,9 @@ const ProjectEditor = (props) => {
             onClick={() => {
               mutate();
             }}
+            disabled={!savable}
           >
-            저장
+            {savable ? "저장" : "기획중"}
           </HeaderButton>
         </HeaderRight>
       </PEHeader>
@@ -179,9 +204,9 @@ const HeaderButton = styled.button`
   }
   &:hover,
   &:active {
-    opacity: 0.6;
+    opacity: ${props => props.disabled ? 1 : 0.6};
   }
-  cursor: pointer;
+  cursor: ${props => props.disabled ? "auto" : "pointer"};
   display: inline-flex;
   -webkit-box-align: center;
   align-items: center;
@@ -196,8 +221,8 @@ const HeaderButton = styled.button`
   font-weight: normal;
   box-sizing: border-box;
   padding: 0px 16px;
-  background-color: rgb(248, 100, 83);
-  color: rgb(255, 255, 255);
+  background-color: ${props => props.disabled ? "rgb(240, 240, 240)" : "rgb(248, 100, 83)"};
+  color: ${props => props.disabled ? "rgb(61,61,61)" : "rgb(255, 255, 255)"};
 `;
 
 const Title = styled.div`

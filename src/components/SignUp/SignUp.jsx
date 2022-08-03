@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../SignIn/SignIn.css';
 import {
   H1Typo,
@@ -30,6 +30,8 @@ const SignUp = (props) => {
     passwordFocus: false,
     passwordConfirmFocus: false
   });
+
+  const navigate = useNavigate()
 
   const nameRef = useRef();
   const emailRef = useRef();
@@ -70,6 +72,7 @@ const SignUp = (props) => {
       })
         .then((res) => {
           alert('환영합니다!');
+          navigate("../signIn")
         })
         .catch((err) => {
           alert(err.data);

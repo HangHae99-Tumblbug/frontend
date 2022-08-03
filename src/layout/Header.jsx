@@ -45,6 +45,10 @@ const Header = () => {
                 </UserButton>
               </UserButtonWrapper>
             </Link>
+            <UserButton onClick={() => {
+              localStorage.removeItem("token")
+              window.location.reload()
+            }}>임시 로그아웃 버튼</UserButton>
           </StatusWrapper>
         </HeaderUpperLayOut>
       </HeaderWrapper>
