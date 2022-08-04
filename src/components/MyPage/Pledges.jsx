@@ -110,13 +110,14 @@ const PledgeItemWrapper = styled.div`
   }
   border-top: 1px solid rgb(230, 230, 230);
   @media only screen and (min-width: 1080px) {
-    /* flex-direction: row; */
-  flex-direction: column;
+    flex-direction: row;
+  /* flex-direction: column; */
     padding: 20px;
+
   }
   position: relative;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   padding: 20px 16px;
   .idswrap {
     @media only screen and (min-width: 1080px) {
