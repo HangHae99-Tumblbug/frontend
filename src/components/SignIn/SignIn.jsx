@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import TumblbugApis from '../../shared/api';
 import jwtDecode from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const SignIn = (props) => {
   const navigate = useNavigate();
@@ -91,6 +92,9 @@ const SignIn = (props) => {
             <BigRedButton onClick={handleLogin}>
               <span>로그인</span>
             </BigRedButton>
+            <a href={process.env.REACT_APP_KAKAO_LOGIN} style={{backgroundColor: "gold", color: "rgba(61,61,61)"}}>
+              <span>카카오 로그인</span>
+            </a>
             <SmallTextWrapper>
               아직 텀블벅 계정이 없으신가요?
               <span>

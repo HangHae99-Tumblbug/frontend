@@ -17,8 +17,10 @@ import GlobalStyle from './styles/global';
 import Project from './pages/Project';
 import Pledges from './components/MyPage/Pledges';
 import PledgeDetail from './components/MyPage/PledgeDetail';
+import KakaoOauth from './components/SignIn/KakaoOauth';
 
 function App() {
+
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
@@ -32,6 +34,7 @@ function App() {
           <Route path="/signIn" element={<SignIn />} />
           <Route path="/signUp" element={<SignUp />} />
           <Route path="/project-editor/:tab" element={<ProjectEditor />} />
+          <Route path="/kakao/callback" element={<KakaoOauth />} />
         </Routes>
       </ThemeProvider>
     </div>
