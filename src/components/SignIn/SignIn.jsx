@@ -97,7 +97,7 @@ const SignIn = (props) => {
             </BigRedButton>
             <BigRedButton style={{backgroundColor: "#Fee500", marginTop: ".5em"}}>
               <a href={process.env.REACT_APP_KAKAO_LOGIN}>
-                <img src="/images/kakaologin.png" style={{width: "100%"}}/>
+                <img src="/images/kakaologin.png" style={{height: "100%"}}/>
               </a>
             </BigRedButton>
             
