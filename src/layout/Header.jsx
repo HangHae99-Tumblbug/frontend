@@ -1,10 +1,45 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import FaceIcon from '@mui/icons-material/Face';
+import { authActions } from '../redux/auth-slice';
 
 const Header = () => {
   const isHeaderFixed = useSelector((state) => state.layout.headerFixed); // 홈에서만 헤더 고정
+
+  const name = useSelector((state) => state.auth.NAME);
+  const isLogin = useSelector((state) => state.auth.isLogin);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [isMenu, setIsMenu] = useState(false);
+
+  const onMenu = () => {
+    if (!isLogin) {
+      navigate('/signIn');
+    } else {
+      setIsMenu(!isMenu);
+    }
+  };
+
+  const onProject = () => {
+    // 로그인 되어있으면?
+    if (isLogin) {
+      navigate('/project-editor/default');
+    } else {
+      // 로그인이 안 되어있으면?
+      alert('로그인 권한이 필요합니다. 로그인 페이지로 이동합니다.');
+      navigate('/signIn');
+    }
+  };
+
+  const onLogOut = () => {
+    dispatch(authActions.userLogout());
+    alert('로그아웃 되었습니다.');
+    navigate('/signIn');
+  };
 
   // FIXME: 태그들을 다 스타일컴포넌트 태그로 만듬
   return (
@@ -17,12 +52,10 @@ const Header = () => {
             </LogoWrapper>
           </Link>
           <StatusWrapper>
-            <Link
-              to="/project-editor/default"
-              style={{ textDecoration: 'none' }}
-            >
-              <ProjectEditorButton>프로젝트 올리기</ProjectEditorButton>
-            </Link>
+            <ProjectEditorButton onClick={onProject}>
+              프로젝트 올리기
+            </ProjectEditorButton>
+
             <ButtonWrapper>
               <IconWrapper>
                 <img src={'/images/like.svg'} alt="like" />
@@ -33,22 +66,26 @@ const Header = () => {
                 <img src={'/images/notification.svg'} alt="notification" />
               </IconWrapper>
             </ButtonWrapper>
-            <Link to="/signIn" style={{ textDecoration: 'none' }}>
-              <UserButtonWrapper>
-                <UserButton>
+            <UserButtonWrapper onClick={onMenu}>
+              <UserButton>
+                {isLogin && (
                   <UserAvatar>
-                    <ProfileImage>
-                      <UserName>{`임`}</UserName>
-                    </ProfileImage>
+                    <FaceIcon />
                   </UserAvatar>
-                  <UserText>{`로그인/회원가입`}</UserText>
-                </UserButton>
-              </UserButtonWrapper>
-            </Link>
-            <UserButton onClick={() => {
-              localStorage.removeItem("token")
-              window.location.reload()
-            }}>임시 로그아웃 버튼</UserButton>
+                )}
+                <UserText>{isLogin ? name : '로그인/회원가입'}</UserText>
+              </UserButton>
+            </UserButtonWrapper>
+            {isMenu && isLogin && (
+              <MenuWrapper>
+                <MenuList>
+                  <Link to="/pledges" style={{textDecoration: "none"}}>
+                  <MenuItem>후원현황</MenuItem>
+                  </Link>
+                  <MenuItem onClick={onLogOut}>로그아웃</MenuItem>
+                </MenuList>
+              </MenuWrapper>
+            )}
           </StatusWrapper>
         </HeaderUpperLayOut>
       </HeaderWrapper>
@@ -96,6 +133,7 @@ const HeaderUpperLayOut = styled.div`
   display: flex;
   width: 100%;
 
+  box-sizing: border-box;
   padding: 10px 10px;
 
   -webkit-box-align: center;
@@ -240,37 +278,75 @@ const UserAvatar = styled.div`
   align-items: center;
   -webkit-box-pack: center;
   justify-content: center;
-  border: 1px solid rgb(223, 223, 223);
-  box-sizing: border-box;
-  border-radius: 24px;
-  font-weight: bold;
-  background: rgb(217, 217, 217);
 `;
 
-const ProfileImage = styled.span`
-  display: inline-block;
-  justify-content: center;
-  background-color: rgb(208, 208, 208);
-  color: rgb(255, 255, 255);
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  box-shadow: rgb(208 208 208) 0px 0px 1px 0px inset,
-    rgb(208 208 208) 0px 0px 1px 0px;
-  /* margin-right: 0px;
-  margin-top: 5px; */
-`;
-
-const UserName = styled.span`
+const MenuWrapper = styled.div`
+  position: absolute;
   display: flex;
-  -webkit-box-pack: center;
-  justify-content: center;
+  flex-direction: column;
+  top: 80px;
+  right: 10px;
+  width: 240px;
+  transition: all 0.3s ease-in-out 0s;
+  border: 1px solid rgb(228, 228, 228);
+  box-sizing: border-box;
+  border-radius: 4px;
+  z-index: 1200;
+
+  & ::before {
+    position: absolute;
+    top: -5px;
+    right: 35px;
+    width: 8px;
+    height: 8px;
+    background-color: rgb(255, 255, 255);
+    content: ' ';
+    transform: rotate(45deg);
+    border-top: 1px solid rgb(228, 228, 228);
+    border-left: 1px solid rgb(228, 228, 228);
+    z-index: 1002;
+  }
+
+  @media only screen and (min-width: 640px) {
+    /* min-height: 200px; */
+    max-height: 85vh;
+    /* overflow-y: auto; */
+  }
+`;
+
+const MenuList = styled.div`
+  /* overflow-y: auto; */
+  padding: 16px 0px;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  background: rgb(255, 255, 255);
+  box-sizing: border-box;
+  border-radius: 4px;
+  user-select: none;
+  z-index: 1001;
+
+  & :hover {
+    background-color: #ececec;
+  }
+`;
+
+const MenuItem = styled.div`
+  padding: 4px 16px;
+  display: flex;
+  width: 100%;
+  height: 46px;
+  min-height: 46px;
   -webkit-box-align: center;
   align-items: center;
-  width: 100%;
-  height: 100%;
-  font-weight: bold;
-  font-size: 1rem;
+  -webkit-box-pack: start;
+  justify-content: flex-start;
+  font-size: 14px;
+  line-height: 22px;
+  color: rgb(13, 13, 13);
+  cursor: pointer;
+  transition: all 0.3s ease-in-out 0s;
+  box-sizing: border-box;
 `;
 
 const UserText = styled.div`

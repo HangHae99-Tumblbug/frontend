@@ -11,7 +11,7 @@ export const PENotice = (props) => {
       <div className="title">
         {title}
         <div>
-          <img src={process.env.PUBLIC_URL + '/information.svg'} />
+          <img src={process.env.PUBLIC_URL + '/information.svg'} alt="" />
         </div>
       </div>
       <div>
@@ -28,7 +28,7 @@ export const PENotice = (props) => {
 export const Asterisk = (props) => {
   return (
     <AsteriskWrap>
-      <img style={{}} src={process.env.PUBLIC_URL + '/asterisk.svg'} />
+      <img style={{}} src={process.env.PUBLIC_URL + '/asterisk.svg'} alt="" />
     </AsteriskWrap>
   );
 };
@@ -148,7 +148,7 @@ export const PEForm = styled.div`
     flex-direction: column;
   }
 `;
-export const PEFormItemTitle = styled.p`
+export const PEFormItemTitle = styled.div`
   font-weight: bold;
   font-size: 11px;
   line-height: 18px;

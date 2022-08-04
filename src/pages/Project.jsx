@@ -14,6 +14,8 @@ const Project = () => {
   const { projectId } = useParams();
   const project = useSelector((state) => state.projects.project);
 
+  // const isHeaderFixed = useSelector((state) => state.layout.headerFixed); // 홈에서만 헤더 고정
+
   const getProject = async () => {
     try {
       const res = await projectsApi.projectDetail(projectId);
@@ -26,9 +28,9 @@ const Project = () => {
 
   const { data, refetch } = useQuery(['project'], getProject, {});
 
-  useEffect(() => {
-    dispatch(layoutActions.notHeaderFix()); // Header no fix
-  }, []);
+  // useEffect(() => {
+  //   dispatch(layoutActions.notHeaderFix()); // Header no fix
+  // }, []);
 
   useEffect(() => {
     if (data) {
@@ -54,5 +56,6 @@ const Project = () => {
 export default Project;
 
 const ProjectContainer = styled.div`
+  width: 100%;
   padding: 2rem 10px;
 `;

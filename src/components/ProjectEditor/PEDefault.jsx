@@ -138,7 +138,10 @@ const PEDefault = (props) => {
             제목
             <TooltipWrap>
               <div>
-                <img src={process.env.PUBLIC_URL + '/tooltip.svg'} />
+                <img
+                  src={process.env.PUBLIC_URL + '/tooltip.svg'}
+                  alt="tooltipicon"
+                />
               </div>
             </TooltipWrap>
           </PEFormItemTitle>
@@ -237,7 +240,10 @@ const PEDefault = (props) => {
           >
             <TooltipWrap>
               <div>
-                <img src={process.env.PUBLIC_URL + '/tooltip.svg'} />
+                <img
+                  src={process.env.PUBLIC_URL + '/tooltip.svg'}
+                  alt="tooltip"
+                />
               </div>
             </TooltipWrap>
           </PEFormItemTitle>
@@ -246,6 +252,7 @@ const PEDefault = (props) => {
               <div className="image">
                 <img
                   src={process.env.PUBLIC_URL + '/PE-tooltip-thumbnail.png'}
+                  alt="thumbnail"
                 />
               </div>
             </ImgToolTip>

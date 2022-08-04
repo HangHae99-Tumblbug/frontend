@@ -19,8 +19,11 @@ export const kakaoLogin = createAsyncThunk(
         console.log(res);
         
         const ACCESS_TOKEN = res.headers.authorization;
-        localStorage.setItem("token", ACCESS_TOKEN);  
-        thunkAPI.dispatch(authSlice.actions.userLogin(jwtDecode(ACCESS_TOKEN).NAME))
+        if(ACCESS_TOKEN){
+          localStorage.setItem("token", ACCESS_TOKEN);  
+          thunkAPI.dispatch(authSlice.actions.userLogin(jwtDecode(ACCESS_TOKEN).NAME))
+        }
+        
         
         }).catch((err) => {
         console.log("소셜로그인 에러", err);
@@ -38,9 +41,10 @@ const authSlice = createSlice({
       state.isLogin = true
       state.NAME = action.payload
     },
-    userLogout(state, action){
-      state.isLogin = false
-      state.NAME = action.payload
+    userLogout(state, action) {
+      state.isLogin = false;
+      state.NAME = '';
+      localStorage.removeItem('token');
     }
   },
   extraReducers: (builder) => {

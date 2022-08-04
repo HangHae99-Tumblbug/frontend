@@ -1,14 +1,17 @@
 import React, { useRef, forwardRef, useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import DOMPurify from 'dompurify';
 import 'react-quill/dist/quill.snow.css';
 import 'react-quill/dist/quill.core.css';
 import { projectsApi } from '../../shared/api';
+import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 const ProjectContents = forwardRef(({ project }, ref) => {
   const [showBtn, setShowBtn] = useState(false);
   const [selected, setSelected] = useState(null);
+
+  let navigate = useNavigate();
 
   // DomPurify
   const sanitizer = DOMPurify.sanitize;
@@ -31,6 +34,10 @@ const ProjectContents = forwardRef(({ project }, ref) => {
       // 인수로 전달하는 key값에 대해 쿼리를 무효화해줌 => 리패칭
       // 인수를 전달하지 않으면 모든 쿼리가 무효화됨
       queryClient.invalidateQueries('project');
+    },
+    onError: () => {
+      alert('로그인 권한이 필요합니다. 로그인 페이지로 이동합니다.');
+      navigate('/signIn');
     }
   });
 
@@ -42,18 +49,7 @@ const ProjectContents = forwardRef(({ project }, ref) => {
           className="view ql-editor"
           style={{ padding: 0 }}
           dangerouslySetInnerHTML={{
-            __html: sanitizer(
-              `<p>하이하이</p><p>바이바이</p><p><span class="ql-size-huge">ㅇㅎㅇㅎㅇㅎ&nbsp;</span></p><p>&nbsp;</p><p>&nbsp;</p>`,
-              {
-                ALLOWED_TAGS: ['iframe'],
-                ADD_ATTR: [
-                  'allow',
-                  'allowfullscreen',
-                  'frameborder',
-                  'scrolling'
-                ]
-              }
-            )
+            __html: sanitizer(`${project.plan}`)
           }}
         ></div>
       </MainColumn>
@@ -75,12 +71,12 @@ const ProjectContents = forwardRef(({ project }, ref) => {
           </CreatorCard>
           <StickerWrapper>
             <Rewards>
-              <div>선물 선택</div>
+              <div ref={ref}>선물 선택</div>
               {project.rewards?.map((it) => {
                 return (
                   <RewardCard
-                    ref={ref}
                     key={it.rewardId}
+                    active={selected === it.rewardId}
                     onClick={() => {
                       onBtnShow(it.rewardId);
                     }}
@@ -115,6 +111,9 @@ const ProjectContents = forwardRef(({ project }, ref) => {
 export default ProjectContents;
 
 const Container = styled.div`
+  width: 100%;
+  box-sizing: border-box;
+
   /* width: 1040px; */
   padding: 3rem 0;
   display: flex;
@@ -129,8 +128,8 @@ const MainColumn = styled.div`
   border: 1px solid #ececec;
   padding: 2rem;
 
-  order: 1;
-  width: 100%;
+  /* order: 1; */
+  width: 60%;
   padding-bottom: 3rem;
   @media (min-width: 1080px) {
     flex: 1 1 650px;
@@ -148,14 +147,14 @@ const MainColumn = styled.div`
 `;
 
 const SubColumn = styled.div`
-  order: 2;
-  width: 100%;
+  /* order: 2; */
+  width: 40%;
   margin: 0px;
 
   @media (min-width: 1080px) {
     display: block;
-    flex: 0 1 352px;
-    max-width: 352px;
+    /* flex: 0 1 352px;
+    max-width: 352px; */
     /* padding-top: 25px; */
   }
 `;
@@ -169,7 +168,7 @@ const SubColumnInner = styled.div`
 `;
 
 const CreatorCard = styled.div`
-  width: 100%;
+  /* width: 100%; */
   background-color: rgb(255, 255, 255);
   border-radius: 4px;
   transition: box-shadow 0.2s ease-in-out 0s;
@@ -232,11 +231,11 @@ const Rewards = styled.div`
 
 const RewardCard = styled.div`
   cursor: pointer;
-  margin: 1rem 0;
+  margin: 1.5rem 0;
   border-radius: 4px;
   box-shadow: rgb(0 0 0 / 10%) 0px 1px 0px, rgb(0 0 0 / 4%) 0px 2px 4px;
   padding: 20px;
-  width: 100%;
+  /* width: 100%; */
   background-color: rgb(255, 255, 255);
 
   transition: height 0.2s ease 0s, box-shadow 0.2s ease 0s,
@@ -245,11 +244,13 @@ const RewardCard = styled.div`
   border: 1px solid rgb(239, 239, 239);
 
   :hover {
-    border: solid 1px gray;
+    border: groove 1px gray;
   }
-  :active {
-    background-color: #ececec;
-  }
+  ${({ active }) =>
+    active &&
+    css`
+      border: groove 1px gray;
+    `}
 
   div:first-child {
     font-size: 24px;

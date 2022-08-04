@@ -12,12 +12,14 @@ import { Link } from 'react-router-dom';
 import TumblbugApis from '../../shared/api';
 import jwtDecode from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { authActions } from '../../redux/auth-slice';
 
 const SignIn = (props) => {
   const navigate = useNavigate();
   const emailRef = useRef();
   const passwordRef = useRef();
+  const dispatch = useDispatch();
 
   const handleLogin = () => {
     console.log('login clicked!');
@@ -31,21 +33,22 @@ const SignIn = (props) => {
         if (res.headers.authorization) {
           // console.log(jwtDecode(res.data.token));
           console.log(jwtDecode(res.headers.authorization));
-          alert('로그인 성공');
+          alert('로그인에 성공하였습니다');
           // localStorage.setItem("token", res.data.token)
           //
           localStorage.setItem('token', res.headers.authorization);
+          const username = jwtDecode(res.headers.authorization).NAME;
+          dispatch(authActions.userLogin(username));
           navigate('/');
         }
       })
       .catch((err) => {
-        alert(err.data.message);
+        alert('로그인에 실패하였습니다');
       });
   };
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
-      alert('로그인 상태입니다.');
       navigate('/');
     }
   }, []);

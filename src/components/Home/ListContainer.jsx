@@ -36,7 +36,7 @@ const ListContainer = () => {
       {projects.map((it) => {
         let time = new Date().toISOString();
         const date1 = new Date(time.slice(0, 10)), // 현재 날짜
-          date2 = new Date('2022-08-30'), // 종료날짜 FIXME: it.endDate
+          date2 = new Date(it.endDate),
           time_difference = difference(date1, date2);
 
         return (
@@ -52,7 +52,7 @@ const ListContainer = () => {
               <ProjectCardInfo>
                 <div>
                   <ProjectSub>
-                    <span>{it.category}</span>
+                    <span>{it.category.toUpperCase()}</span>
                     <Seperator>{' | '}</Seperator>
                     <span>{it.creatorName}</span>
                   </ProjectSub>
@@ -64,20 +64,28 @@ const ListContainer = () => {
                     {it.title}
                   </ProjectTitle>
                   <ProjectDec>
-                    {
-                      '아니이게이러헥어렵다고이렇게이렁마ㅓ라ㅣㅁㄴ어리ㅏㅁ너이럼ㄴ이ㅏ럼ㄴ이럼닝ㅇㄴㄹㅇㄹㄴㅇㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹ'
-                    }
+                    {it.summary}
+                    <Br>
+                      {it.summary.length < 30 &&
+                        'dsfsdfasdasdasdasdasdasdasdasd'}
+                    </Br>
                   </ProjectDec>
                 </div>
               </ProjectCardInfo>
               <ProjectStatus>
                 <div>
-                  <FundingPercent>{`2758%`}</FundingPercent>
-                  <FundingAmount>{it.totalFundingPrice}</FundingAmount>
+                  <FundingPercent>
+                    {(it.totalFundingPrice / it.goal) * 100}%
+                  </FundingPercent>
+                  <FundingAmount>{it.totalFundingPrice + '원'}</FundingAmount>
                 </div>
                 <RestDay>{time_difference + '일 남음'}</RestDay>
               </ProjectStatus>
-              <ProjectProgressBar></ProjectProgressBar>
+              <ProjectProgressBar>
+                <Progress
+                  width={(it.totalFundingPrice / it.goal) * 100 + '%'}
+                />
+              </ProjectProgressBar>
             </div>
           </ProjectCardWrapper>
         );
@@ -104,13 +112,15 @@ const ListWrapper = styled.div`
 `;
 
 const ProjectCardWrapper = styled.div`
+  /* display: flex; */
+
   box-sizing: border-box;
   margin-bottom: 2rem;
 
   width: 25%;
 
   > div {
-    padding: 0 10px;
+    padding: 0 1rem;
     @media (max-width: 650px) {
       display: flex;
       align-items: flex-start;
@@ -133,10 +143,13 @@ const ProjectCardWrapper = styled.div`
 
 const ProjectCardImage = styled.div`
   width: 100%;
+  height: 200px;
+
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
   cursor: pointer;
+  border: 1px solid #eee;
 
   & :hover {
     transform: scale(1.1);
@@ -145,6 +158,8 @@ const ProjectCardImage = styled.div`
 
   img {
     width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 `;
 
@@ -176,6 +191,15 @@ const ProjectTitle = styled.div`
   cursor: pointer;
   font-size: 1.5rem;
   font-weight: 500;
+
+  -webkit-line-clamp: 1;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 `;
 
 const ProjectDec = styled.div`
@@ -194,6 +218,11 @@ const ProjectDec = styled.div`
   -webkit-box-orient: vertical;
 `;
 
+const Br = styled.p`
+  margin: 0;
+  visibility: hidden;
+`;
+
 const ProjectStatus = styled.div`
   display: flex;
   justify-content: space-between;
@@ -202,8 +231,16 @@ const ProjectStatus = styled.div`
 
 const ProjectProgressBar = styled.div`
   width: 100%;
-  height: 3px;
-  background-color: rgb(255, 87, 87); ;
+  height: 4px;
+  background-color: #eee;
+
+  border-radius: 4px;
+`;
+
+const Progress = styled.div`
+  background-color: rgb(255, 87, 87);
+  width: ${(props) => props.width};
+  height: 100%;
 `;
 
 const FundingPercent = styled.span`
@@ -213,7 +250,7 @@ const FundingPercent = styled.span`
 `;
 
 const FundingAmount = styled.span`
-  margin-left: 4px;
+  margin-left: 0.5rem;
   font-size: 0.8rem;
   line-height: 20px;
   letter-spacing: -0.015em;

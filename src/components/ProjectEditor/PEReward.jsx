@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState, useMemo } from "react";
-import styled from "styled-components";
+import React, { useEffect, useRef, useState, useMemo } from 'react';
+import styled from 'styled-components';
 import {
   Asterisk,
   PEForm,
@@ -20,6 +20,7 @@ const PEReward = (props) => {
   const { postData } = props;
   const [rewardItem, setRewardItem] = useState("");
   const [fundingPrice, setFundingPrice] = useState(0);
+
   const dispatch = useDispatch();
 
   const rewardItemRef = useRef();
@@ -29,6 +30,7 @@ const PEReward = (props) => {
     setRewardItem(e.target.value);
   };
   const handleFundingPrice = (e) => {
+
     if(Number(e.target.value) > 2100000000) {
       alert("최대 21억까지 설정 가능합니다.")
       setFundingPrice("2100000000")
@@ -56,6 +58,7 @@ const PEReward = (props) => {
     }
   }
 
+
   console.log(postData?.rewards);
   useEffect(() => {
     console.log(postData?.title);
@@ -64,7 +67,7 @@ const PEReward = (props) => {
   return (
     <>
       <PEItemWrapper>
-        <PEInfo style={{ position: "sticky", top: "0" }}>
+        <PEInfo style={{ position: 'sticky', top: '0' }}>
           <PEInfoTitle>
             내가 만든 선물
             <Asterisk />
@@ -72,7 +75,7 @@ const PEReward = (props) => {
           <RewardList>
             {postData?.rewards.map((x, i) => {
               return (
-                <li>
+                <li key={i}>
                   <div>
                     <strong>
                       {x.fundingPrice
@@ -110,7 +113,7 @@ const PEReward = (props) => {
                 금액대로 여러 개의 선물을 만들어주세요. 펀딩 성공률이 높아지고,
                 더 많은 후원 금액을 모금할 수 있어요.
               </PEInfoDesc>
-              <PEFormItemTitle style={{ marginTop: "1em" }}>
+              <PEFormItemTitle style={{ marginTop: '1em' }}>
                 선물 아이템
               </PEFormItemTitle>
               <PEFormInput

@@ -2,10 +2,15 @@ import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 import Footer from './Footer';
 import Header from './Header';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { layoutActions } from '../redux/layout-slice';
 
 const Container = () => {
   const isHeaderFixed = useSelector((state) => state.layout.headerFixed); // 홈에서만 헤더 고정
+
+  // console.log(isHeaderFixed, '헤더');
+  // const dispatch = useDispatch();
 
   return (
     <ConainerWrapper>

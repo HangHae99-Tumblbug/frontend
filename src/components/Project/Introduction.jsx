@@ -44,7 +44,7 @@ const Introduction = ({ project, rewardRef }) => {
   return (
     <IntroductionContainer>
       <TitleContainer>
-        <Category>{project?.category}</Category>
+        <Category>{project?.category?.toUpperCase()}</Category>
         <Title>{project?.title}</Title>
       </TitleContainer>
       <ProjectInfoContainer>
@@ -63,7 +63,7 @@ const Introduction = ({ project, rewardRef }) => {
                 {project?.totalFundingPrice}
                 <span>원</span>
               </span>
-              <span>{`2743%`}</span>
+              <span>{(project?.totalFundingPrice / project?.goal) * 100}%</span>
             </Price>
             <Time>
               <div className="sec">남은 시간</div>
@@ -110,6 +110,9 @@ const Introduction = ({ project, rewardRef }) => {
 export default Introduction;
 
 const IntroductionContainer = styled.div`
+  width: 100%;
+  box-sizing: border-box;
+
   text-align: center;
 `;
 
@@ -132,7 +135,7 @@ const Category = styled.span`
   font-size: 0.9rem;
   font-weight: 600;
   color: rgb(117, 117, 117);
-  background-color: rgb(250, 250, 250);
+  background-color: #ececec;
   border: 1px solid rgb(239, 239, 239);
   border-radius: 2px;
 
@@ -203,6 +206,7 @@ const ProjectInfoContainer = styled.div`
   }
 
   button.funding-btn {
+    font-family: 'Noto Sans KR', sans-serif;
     margin-top: 0.5rem;
     border-radius: 0.285714rem;
     text-transform: none;

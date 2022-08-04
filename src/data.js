@@ -31,6 +31,25 @@ export const category = [
   }
 ];
 
+export const sorts = [
+  {
+    value: 'popular',
+    sortName: '인기순'
+  },
+  {
+    value: 'publishedAt',
+    sortName: '최신순'
+  },
+  {
+    value: 'amount',
+    sortName: '최다 금액순'
+  },
+  {
+    value: 'endedAt',
+    sortName: '마감 임박순'
+  }
+];
+
 export const projects = [
   {
     projectId: '1',
