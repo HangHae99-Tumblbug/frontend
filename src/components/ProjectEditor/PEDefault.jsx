@@ -280,7 +280,6 @@ const PEDefault = (props) => {
               ref={thumbnailRef}
               type="file"
               accept=".jpg, .jpeg, .png"
-              multiple
             />
           </ImageUploader>
           <ThumbnailWrapper>

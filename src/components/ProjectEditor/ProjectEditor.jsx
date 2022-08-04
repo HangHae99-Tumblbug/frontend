@@ -23,7 +23,7 @@ const ProjectEditor = (props) => {
   };
   const { mutate } = useMutation(newPost, {
     onSuccess: () => {
-      dispatch(setTmpImage([]))
+      // dispatch(setTmpImage([]))
       location("/")
     }
   });
@@ -71,7 +71,10 @@ const ProjectEditor = (props) => {
         <HeaderRight>
           <HeaderButton
             onClick={() => {
-              mutate();
+              if(window.confirm("프로젝트를 저장하시겠습니까?"))
+              {
+                mutate();
+              }
             }}
             disabled={!savable}
           >
