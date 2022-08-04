@@ -30,7 +30,9 @@ const TumblbugApis = {
       }
     }),
   deleteImages: (images) => api.delete('/images', images),
-  newPost: (post) => api.post('/projects', post)
+  newPost: (post) => api.post('/projects', post),
+  getPledges: () => api.get('/mypage'),
+  getOnePledge: (fundId) => api.get(`/mypage/${fundId}`)
 };
 
 export const projectsApi = {

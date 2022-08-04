@@ -15,6 +15,8 @@ import Container from './layout/Container';
 import Home from './pages/Home';
 import GlobalStyle from './styles/global';
 import Project from './pages/Project';
+import Pledges from './components/MyPage/Pledges';
+import PledgeDetail from './components/MyPage/PledgeDetail';
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
           <Route path="/" element={<Container />}>
             <Route index element={<Home />} />
             <Route path="/project/:projectId" element={<Project />} />
+            <Route path="/pledges" element={<Pledges />}/>
+            <Route path="/pledges/:fundid" element={<PledgeDetail />}/>
           </Route>
           <Route path="/signIn" element={<SignIn />} />
           <Route path="/signUp" element={<SignUp />} />
