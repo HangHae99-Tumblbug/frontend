@@ -27,14 +27,19 @@ const Pledges = (props) => {
       <PledgesListWrapper>
         {pledgesQuery.data.map((x,i) =>
             <PledgeItemWrapper>
-            <div className="idswrap">후원번호: {x.fundId}</div>
-            <div className="idswrap">후원계정: {x.userId}</div>
+                <div style={{width: "10rem"}}>
+                    <img style={{width: "100%"}} src={x.projectThumbnail} />
+                </div>
+                <div style={{marginLeft: "1rem"}}>
+                <div className="idswrap">후원번호: {x.fundId}</div>
             <div className="projectTitle">
-                <Link to={`../pledges/${i}`}>
-                    {x.projectId}
+                <Link to={`../pledges/${x.fundId}`}>
+                    {x.projectTitle}
                 </Link>
             </div>
-            <li>{x.rewardId}</li>
+            <li>{x.rewardItem} : {x.rewardFundingPrice}원</li>
+                </div>
+            
             </PledgeItemWrapper>)
             }
       </PledgesListWrapper>
@@ -97,17 +102,21 @@ const PledgesListWrapper = styled.div`
 `;
 
 const PledgeItemWrapper = styled.div`
+    & > div > img{
+        border-radius: .5em;
+    }
   &:first-of-type {
     border-top: none;
   }
   border-top: 1px solid rgb(230, 230, 230);
   @media only screen and (min-width: 1080px) {
     /* flex-direction: row; */
+  flex-direction: column;
     padding: 20px;
   }
   position: relative;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   padding: 20px 16px;
   .idswrap {
     @media only screen and (min-width: 1080px) {

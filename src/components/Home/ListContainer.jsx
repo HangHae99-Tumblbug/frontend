@@ -75,7 +75,7 @@ const ListContainer = () => {
               <ProjectStatus>
                 <div>
                   <FundingPercent>
-                    {(it.totalFundingPrice / it.goal) * 100}%
+                    {((it.totalFundingPrice / it.goal) * 100).toFixed(1)}%
                   </FundingPercent>
                   <FundingAmount>{it.totalFundingPrice + '원'}</FundingAmount>
                 </div>

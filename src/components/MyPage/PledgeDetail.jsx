@@ -20,14 +20,14 @@ const PledgeDetail = (props) => {
   return (
     <>
       <PledgeTitleWrapper>
-        <h3>projectId {onePledgeQuery.data.projectId}</h3>
+        <h3>{onePledgeQuery.data.projectId}</h3>
       </PledgeTitleWrapper>
       <InfoBox>
         <InfoBoxHeader>
           <p>후원 정보</p>
           <dl>
           <dt>후원 번호</dt>
-          <dd>fundId {onePledgeQuery.data.fundId}</dd>
+          <dd>{onePledgeQuery.data.fundId}</dd>
           </dl>
         </InfoBoxHeader>
       </InfoBox>
@@ -36,15 +36,15 @@ const PledgeDetail = (props) => {
           <p>선물 정보</p>
           <dl>
           <dt>선물 번호</dt>
-          <dd>rewardId {onePledgeQuery.data.rewardId}</dd>
+          <dd>{onePledgeQuery.data.rewardId}</dd>
           </dl>
           <dl>
           <dt>선물 구성</dt>
-          <dd>rewardItem {onePledgeQuery.data.rewardItem}</dd>
+          <dd>{onePledgeQuery.data.rewardItem}</dd>
           </dl>
           <dl>
           <dt>후원 금액</dt>
-          <dd>fundingPrice {onePledgeQuery.data.fundingPrice}</dd>
+          <dd>{onePledgeQuery.data.fundingPrice}</dd>
           </dl>
         </InfoBoxHeader>
       </InfoBox>

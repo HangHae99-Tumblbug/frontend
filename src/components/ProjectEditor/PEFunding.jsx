@@ -42,7 +42,7 @@ const PEFunding = (props) => {
       const formatValue = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       // console.log(formatValue);
       // setGoal(formatValue);
-      dispatch(setGoal(value))
+      dispatch(setGoal(Number(value)))
       goalRef.current.value = formatValue;
     }
   };
@@ -96,7 +96,7 @@ const PEFunding = (props) => {
               <div className="feeswrap">
                 총 수수료
                 <em>
-                  {Math.floor((Number(postData.goal?.replace(/[^0-9\\.]+/g, "")) * 0.28))
+                  {Math.floor((Number(postData.goal?.toString().replace(/[^0-9\\.]+/g, "")) * 0.28))
                     .toString()
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   원
@@ -105,7 +105,7 @@ const PEFunding = (props) => {
               <div className="feeswrap">
                 결제 수수료 (총 결제액의 3% + VAT)
                 <em>
-                  {Math.floor((Number(postData.goal?.replace(/[^0-9\\.]+/g, "")) * 0.13))
+                  {Math.floor((Number(postData.goal?.toString().replace(/[^0-9\\.]+/g, "")) * 0.13))
                     .toString()
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   원
@@ -114,7 +114,7 @@ const PEFunding = (props) => {
               <div className="feeswrap">
                 플랫폼 수수료 (총 결제액의 5% + VAT)
                 <em>
-                  {Math.floor((Number(postData.goal?.replace(/[^0-9\\.]+/g, "")) * 0.15))
+                  {Math.floor((Number(postData.goal?.toString().replace(/[^0-9\\.]+/g, "")) * 0.15))
                     .toString()
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   원

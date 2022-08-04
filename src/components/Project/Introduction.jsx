@@ -63,7 +63,7 @@ const Introduction = ({ project, rewardRef }) => {
                 {project?.totalFundingPrice}
                 <span>원</span>
               </span>
-              <span>{(project?.totalFundingPrice / project?.goal) * 100}%</span>
+              <span>{((project?.totalFundingPrice / project?.goal) * 100).toFixed(1)}%</span>
             </Price>
             <Time>
               <div className="sec">남은 시간</div>
