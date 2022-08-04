@@ -95,9 +95,12 @@ const SignIn = (props) => {
             <BigRedButton onClick={handleLogin}>
               <span>로그인</span>
             </BigRedButton>
-            <a href={process.env.REACT_APP_KAKAO_LOGIN} style={{backgroundColor: "gold", color: "rgba(61,61,61)"}}>
-              <span>카카오 로그인</span>
-            </a>
+            <BigRedButton style={{backgroundColor: "#Fee500", marginTop: ".5em"}}>
+              <a href={process.env.REACT_APP_KAKAO_LOGIN}>
+                <img src="/images/kakaologin.png" style={{width: "100%"}}/>
+              </a>
+            </BigRedButton>
+            
             <SmallTextWrapper>
               아직 텀블벅 계정이 없으신가요?
               <span>
