@@ -19,6 +19,17 @@ const ProjectContents = forwardRef(({ project }, ref) => {
   // DomPurify
   const sanitizer = DOMPurify.sanitize;
 
+  const handleScroll = () => {
+    // if (!window.scrollY) return;
+    // // 현재 위치가 이미 최상단일 경우 return
+  
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  
+  };
+
   const onBtnShow = (rewardId) => {
     setShowBtn(true);
     setSelected(rewardId);
@@ -37,6 +48,7 @@ const ProjectContents = forwardRef(({ project }, ref) => {
       // 인수로 전달하는 key값에 대해 쿼리를 무효화해줌 => 리패칭
       // 인수를 전달하지 않으면 모든 쿼리가 무효화됨
       queryClient.invalidateQueries('project');
+      alert('후원 성공!')
     },
     onError: (error) => {
       if (!isLogin) {
@@ -97,7 +109,10 @@ const ProjectContents = forwardRef(({ project }, ref) => {
                           const data = {
                             rewardId: it.rewardId
                           };
+                        
                           onFunding(data);
+                          
+                          handleScroll()
                         }}
                       >
                         {it.fundingPrice}원 후원하기

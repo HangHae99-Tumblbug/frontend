@@ -20,7 +20,8 @@ const PledgeDetail = (props) => {
   return (
     <>
       <PledgeTitleWrapper>
-        <h3>{onePledgeQuery.data.projectId}</h3>
+        <h3>{onePledgeQuery.data.projectTitle}</h3>
+        <img style={{width: "20rem"}} src={onePledgeQuery.data.projectThumbnail} />
       </PledgeTitleWrapper>
       <InfoBox>
         <InfoBoxHeader>
@@ -34,10 +35,6 @@ const PledgeDetail = (props) => {
       <InfoBox>
         <InfoBoxHeader>
           <p>선물 정보</p>
-          <dl>
-          <dt>선물 번호</dt>
-          <dd>{onePledgeQuery.data.rewardId}</dd>
-          </dl>
           <dl>
           <dt>선물 구성</dt>
           <dd>{onePledgeQuery.data.rewardItem}</dd>

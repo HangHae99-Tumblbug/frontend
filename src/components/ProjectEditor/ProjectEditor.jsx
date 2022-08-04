@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
-import { Link, useParams, useLocation } from 'react-router-dom';
+import { Link, useParams, useNavigate, Navigate } from 'react-router-dom';
 import './ProjectEditor.css';
 import PEDefault from './PEDefault';
 import PEFunding from './PEFunding';
@@ -16,7 +16,7 @@ const ProjectEditor = (props) => {
   const params = useParams();
   const postData = useSelector((state) => state.post.post);
   const dispatch = useDispatch()
-  const location = useLocation()
+  const navigate = useNavigate()
   const [savable, setSavable] = useState(false)
   const newPost = () => {
     TumblbugApis.newPost(postData);
@@ -24,7 +24,7 @@ const ProjectEditor = (props) => {
   const { mutate } = useMutation(newPost, {
     onSuccess: () => {
       // dispatch(setTmpImage([]))
-      location("/")
+      navigate("/")
     }
   });
   // const images = postData.thumbnails.map(x => x?.filename)

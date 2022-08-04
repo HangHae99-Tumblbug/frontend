@@ -240,6 +240,7 @@ const ProjectProgressBar = styled.div`
 const Progress = styled.div`
   background-color: rgb(255, 87, 87);
   width: ${(props) => props.width};
+  max-width: 100%;
   height: 100%;
 `;
 
