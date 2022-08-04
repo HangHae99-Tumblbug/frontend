@@ -26,11 +26,18 @@ const Project = () => {
   };
   const queryClient = useQueryClient();
 
-  const { data, refetch } = useQuery(['project'], getProject, {});
+  const { data, refetch } = useQuery(['project'], getProject, {
+    suspense: true
+  });
 
   // useEffect(() => {
   //   dispatch(layoutActions.notHeaderFix()); // Header no fix
   // }, []);
+
+  useEffect(() => {
+    refetch();
+    queryClient.invalidateQueries('project');
+  }, []);
 
   useEffect(() => {
     if (data) {
@@ -38,17 +45,12 @@ const Project = () => {
     }
   }, [data]);
 
-  useEffect(() => {
-    queryClient.invalidateQueries('project');
-    refetch();
-  }, []);
-
   const rewardRef = useRef(null);
 
   return (
     <ProjectContainer>
-      <Introduction project={project} rewardRef={rewardRef} />
-      <ProjectContents project={project} ref={rewardRef} />
+      <Introduction project={data} rewardRef={rewardRef} />
+      <ProjectContents project={data} ref={rewardRef} />
     </ProjectContainer>
   );
 };

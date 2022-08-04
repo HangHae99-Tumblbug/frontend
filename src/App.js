@@ -1,25 +1,24 @@
 import './App.css';
 import { ThemeProvider } from 'styled-components';
-import Header from './layout/Header';
 import { Routes, Route } from 'react-router-dom';
-import SignIn from './components/SignIn/SignIn';
-import SignUp from './components/SignUp/SignUp';
-import { useLocation } from 'react-router-dom';
 import { theme } from './shared/Styles';
 import ProjectEditor from './components/ProjectEditor/ProjectEditor';
-import axios from 'axios';
 import { useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { authActions } from './redux/auth-slice';
 import Container from './layout/Container';
-import Home from './pages/Home';
 import GlobalStyle from './styles/global';
-import Project from './pages/Project';
 import Pledges from './components/MyPage/Pledges';
 import PledgeDetail from './components/MyPage/PledgeDetail';
 import KakaoOauth from './components/SignIn/KakaoOauth';
+import React, { lazy } from 'react';
 import { useDispatch } from 'react-redux';
 import jwtDecode from 'jwt-decode';
+
+const Project = lazy(() => import('./pages/Project'));
+const SignIn = lazy(() => import('./components/SignIn/SignIn'));
+const SignUp = lazy(() => import('./components/SignUp/SignUp'));
+const Home = lazy(() => import('./pages/Home'));
 
 function App() {
   const dispatch = useDispatch();

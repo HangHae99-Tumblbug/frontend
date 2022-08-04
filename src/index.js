@@ -9,6 +9,7 @@ import { ThemeProvider } from 'styled-components';
 import theme from './styles/theme';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Suspense } from 'react';
+import LoadingSpinner from './layout/LodingSpinner';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -23,7 +24,7 @@ const queryClient = new QueryClient({
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
-    <Suspense fallback={<div>로딩중이에요!</div>}>
+    <Suspense fallback={<LoadingSpinner />}>
       <QueryClientProvider client={queryClient}>
         <Provider store={store}>
           <ThemeProvider theme={theme}>

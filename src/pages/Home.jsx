@@ -69,8 +69,10 @@ const Home = () => {
     return data;
   };
 
-  const { data, refetch } = useQuery(['projects_category'], () =>
-    getProjects()
+  const { data, refetch } = useQuery(
+    ['projects_category'],
+    () => getProjects(),
+    { suspense: true }
   );
 
   useEffect(() => {

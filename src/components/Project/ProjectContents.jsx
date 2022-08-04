@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import DOMPurify from 'dompurify';
 import 'react-quill/dist/quill.snow.css';
 import 'react-quill/dist/quill.core.css';
+import { useSelector } from 'react-redux';
 import { projectsApi } from '../../shared/api';
 import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -12,6 +13,8 @@ const ProjectContents = forwardRef(({ project }, ref) => {
   const [selected, setSelected] = useState(null);
 
   let navigate = useNavigate();
+
+  const isLogin = useSelector((state) => state.auth.isLogin);
 
   // DomPurify
   const sanitizer = DOMPurify.sanitize;
@@ -35,9 +38,13 @@ const ProjectContents = forwardRef(({ project }, ref) => {
       // 인수를 전달하지 않으면 모든 쿼리가 무효화됨
       queryClient.invalidateQueries('project');
     },
-    onError: () => {
-      alert('로그인 권한이 필요합니다. 로그인 페이지로 이동합니다.');
-      navigate('/signIn');
+    onError: (error) => {
+      if (!isLogin) {
+        alert('로그인 권한이 필요합니다. 로그인 페이지로 이동합니다.');
+        navigate('/signIn');
+      } else {
+        alert('펀딩 기간이 아닙니다.');
+      }
     }
   });
 
@@ -60,7 +67,7 @@ const ProjectContents = forwardRef(({ project }, ref) => {
               <div className="creator-intro">창작자 소개</div>
               <div className="creator-wrapper">
                 <div className="creator-profileImage">
-                  <img src="/images/test.jpg" alt="" />
+                  <img src="/images/person.png" alt="" />
                 </div>
                 <div className="creator-name">{project.creatorName}</div>
               </div>

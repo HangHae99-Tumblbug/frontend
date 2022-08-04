@@ -24,6 +24,9 @@ const projectsSlice = createSlice({
     setPost: (state, action) => {
       state.project = { ...action.payload };
     },
+    setResetPost: (state, action) => {
+      state.project = {};
+    },
     setCategory: (state, action) => {
       state.category = { ...action.payload };
     },
